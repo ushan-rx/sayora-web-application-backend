@@ -8,6 +8,7 @@ const { getDoctorsService,
         getDoctorByIDService, 
         updateDoctorService, 
         deleteDoctorService } = require('../services/doctor.service');
+const getPaginationData = require('../services/queryString.service');
 
 
 const buildQuery = (filters)=>{
@@ -40,19 +41,44 @@ const buildQuery = (filters)=>{
     if(filters.sort){
         query.sort = filters.sort;
     }
+    
+    return query;
 }
 
-const getDoctors = async (req, res) =>{
+/**
+ * Get doctors with filters and pagination.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ * @returns {Promise<void>} - A promise that resolves when the doctors are retrieved.
+ */
+const getDoctors = async (req, res, next) =>{
     try{
-        const filters = buildQuery(req.query);
-        const doctors = await getDoctorsService(filters);
-        if(doctors.length === 0){
+        const filters = buildQuery(req.query); // returns constraints for query
+        const pagination = getPaginationData(req.query);  // returns {sort, limit, page, skip }
+
+        /**
+         * Retrieves a list of doctors based on the provided filters and pagination options.
+         *
+         * @param {Object} filters - The filters to apply when querying for doctors.
+         * @param {Object} pagination - The pagination options for the query.
+         * @returns {Array} An array of doctors and total count matching the provided filters and pagination options.
+         */
+        const doctors = await getDoctorsService({filters, pagination}); 
+
+        if(doctors.data.length === 0){
             throw new CustomError.NotFoundError('No doctors found');
         }else{
-            res.status(StatusCodes.OK).json({doctors, count: doctors.length});
+            res.status(StatusCodes.OK).json({
+                    data: doctors.data,
+                    totalItems: doctors.count,
+                    currentPage: pagination.page,
+                    totalPages: Math.ceil(doctors.count/pagination.limit)
+                });
         }
     }catch(error){
-        res.status(error.statusCode).json({message: error.message});
+        next(error);
     }
 }
 
@@ -73,9 +99,12 @@ const getDoctor = async (req, res, next) => {
 const createDoctor = async (req, res, next) =>{
     try {
         const doctor = await createDoctorService(req.body);
+        if(!doctor){
+            throw new CustomError.InternalServerError(`Error creating doctor \n ${error.message}`)
+        }
         res.status(StatusCodes.CREATED).json(doctor);
     } catch (error) {
-        next(new CustomError.InternalServerError(`Error creating doctor \n ${error.message}`));
+        next(error);
     }
 }
 
@@ -88,16 +117,25 @@ const updateDoctor = async (req, res, next) =>{
         }
         res.status(StatusCodes.OK).json(newDoctor);
     } catch (error) {
-        next(new CustomError.InternalServerError(`Error updating doctor \n\t ${error.message}`));
+        next(error);
     }
 }
 
-const deleteDoctor = async (req, res) =>{
-    
+const deleteDoctor = async (req, res, next) =>{
+    try {
+        const doctorId = req.params.id;
+        const doctor = await deleteDoctorService(doctorId);
+        if(!doctor){
+            throw new CustomError.NotFoundError('Doctor not found');
+        }
+        res.status(StatusCodes.OK).json({message: 'Doctor deleted successfully'});
+    } catch (error) {
+        next(error);
+    }
 }
 
 const getDoctorByID = async (req, res) => {
-
+    
 }
 
 
