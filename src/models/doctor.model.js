@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
-const generateID = require("../services/generateID.service");
+const generateID = require("../services/common/generateID.service");
 
 const doctorSchema = new mongoose.Schema({
     
     doctorId: {
         type: String,     
         required: true,
+		unique: true,
     },
     userId: {
         type: String,   
@@ -41,7 +42,7 @@ const doctorSchema = new mongoose.Schema({
 	},
 	gender: {
 		type: String,
-		enum: ['male', 'female']
+		enum: ['male', 'female', 'other'],
 	},
 
 	specialization: [  // doctor's specialization list

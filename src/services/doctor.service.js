@@ -22,7 +22,7 @@ const getDoctorsService = async ({ filters, pagination }) => {
 }
 
 const createDoctorService = async (data) => {
-    return await new Doctor(data).save().lean();
+    return await new Doctor(data).save();
 }
 
 const getDoctorService = async (doctorId) => {

@@ -1,14 +1,13 @@
-const Doctor = require('../models/doctor.model');
+// Desc: Controller for doctor routes
 const CustomError = require('../errors');
 const { StatusCodes } = require('http-status-codes');
-const {body, validationResult, query} = require('express-validator');
 const { getDoctorsService,
         createDoctorService,
         getDoctorService,
         getDoctorByIDService, 
         updateDoctorService, 
         deleteDoctorService } = require('../services/doctor.service');
-const getPaginationData = require('../services/queryString.service');
+const getPaginationData = require('../services/common/queryString.service');
 
 
 const buildQuery = (filters)=>{
@@ -41,6 +40,8 @@ const buildQuery = (filters)=>{
     if(filters.sort){
         query.sort = filters.sort;
     }
+
+    filters.status ? query.status = filters.status : query.status = true;
     
     return query;
 }
@@ -67,8 +68,8 @@ const getDoctors = async (req, res, next) =>{
          */
         const doctors = await getDoctorsService({filters, pagination}); 
 
-        if(doctors.data.length === 0){
-            throw new CustomError.NotFoundError('No doctors found');
+        if(!doctors.data || doctors.data.length === 0){
+            res.status(StatusCodes.OK).json({message: 'No doctors found', data: []});
         }else{
             res.status(StatusCodes.OK).json({
                     data: doctors.data,
@@ -87,9 +88,9 @@ const getDoctor = async (req, res, next) => {
         const doctorId = req.params.id;
         const doctor = await getDoctorService(doctorId);
         if(!doctor){
-            throw new CustomError.NotFoundError('Doctor not found');
+            throw new CustomError.NotFoundError(`Doctor with id ${doctorId} not found`);
         } else {
-            res.status(StatusCodes.OK).json(doctor);
+            res.status(StatusCodes.OK).json({data: doctor});
         }
     } catch (error) {
         next(error);
@@ -100,9 +101,9 @@ const createDoctor = async (req, res, next) =>{
     try {
         const doctor = await createDoctorService(req.body);
         if(!doctor){
-            throw new CustomError.InternalServerError(`Error creating doctor \n ${error.message}`)
+            throw new CustomError.InternalServerError(`Error creating doctor`)
         }
-        res.status(StatusCodes.CREATED).json(doctor);
+        res.status(StatusCodes.CREATED).json({data: doctor});
     } catch (error) {
         next(error);
     }
@@ -113,9 +114,9 @@ const updateDoctor = async (req, res, next) =>{
         const doctorId = req.params.id;
         const newDoctor = await updateDoctorService(doctorId, req.body);
         if(!newDoctor){
-            throw new CustomError.NotFoundError('Doctor not found');
+            throw new CustomError.NotFoundError(`Doctor with id ${doctorId} not found or could not be updated`);
         }
-        res.status(StatusCodes.OK).json(newDoctor);
+        res.status(StatusCodes.OK).json({data: newDoctor});
     } catch (error) {
         next(error);
     }
@@ -126,9 +127,9 @@ const deleteDoctor = async (req, res, next) =>{
         const doctorId = req.params.id;
         const doctor = await deleteDoctorService(doctorId);
         if(!doctor){
-            throw new CustomError.NotFoundError('Doctor not found');
+            throw new CustomError.NotFoundError(`Doctor not found with id ${doctorId}`);
         }
-        res.status(StatusCodes.OK).json({message: 'Doctor deleted successfully'});
+        res.status(StatusCodes.OK).json({message: 'Doctor deleted successfully', data: doctor});
     } catch (error) {
         next(error);
     }
@@ -142,7 +143,6 @@ const getDoctorByID = async (req, res) => {
 module.exports = {
     getDoctor,
     getDoctors,
-    getDoctorByID,
     createDoctor,
     updateDoctor,
     deleteDoctor,

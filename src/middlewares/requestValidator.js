@@ -1,4 +1,3 @@
-const yup = require('yup');
 const customError = require('../errors');
 
 const validate = (schema) => async (req, res, next) => {

@@ -10,7 +10,8 @@ const { createDoctor,
         updateDoctor, 
         deleteDoctor } = require('../../../controllers/doctor.controller');
 
-router.route('/').post(sanitizeMiddleware, validate(doctorSchema), createDoctor).get(sanitizeMiddleware, validate(doctorSchema), getDoctors);      // 'v1/doctor/'
+router.route('/').post(sanitizeMiddleware, validate(doctorSchema), createDoctor)
+.get(sanitizeMiddleware, validate(doctorSchema), getDoctors);      // 'v1/doctor/'
 
 router.route('/:id').get(sanitizeMiddleware, validate(doctorSchema), getDoctor)      // 'v1/doctor/DOC00001'
         .put(sanitizeMiddleware, validate(doctorSchema), updateDoctor)
