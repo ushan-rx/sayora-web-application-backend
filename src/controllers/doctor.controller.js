@@ -75,6 +75,7 @@ const getDoctors = async (req, res, next) =>{
                     data: doctors.data,
                     totalItems: doctors.count,
                     currentPage: pagination.page,
+                    limit: pagination.limit,
                     totalPages: Math.ceil(doctors.count/pagination.limit)
                 });
         }

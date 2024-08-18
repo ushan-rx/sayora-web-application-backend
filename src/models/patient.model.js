@@ -193,7 +193,7 @@ const patientSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-});
+}, { timestamps: true });
 
 
 //for id generation

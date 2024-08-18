@@ -72,7 +72,7 @@ const staffSchema =  new mongoose.Schema({
         default: 30000
     },
 
-})
+});
 
 //for generating staffId
 const customIdPrefix = "STF";

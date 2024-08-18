@@ -56,6 +56,7 @@ const getStaffs = async (req, res, next) =>{
                 data,
                 totalItems: count,
                 page: pagination.page,
+                limit: pagination.limit,
                 totalPages: Math.ceil(count/pagination.limit)
             });
         }
