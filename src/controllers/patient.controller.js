@@ -13,18 +13,14 @@ const removeSensitiveFields = require('../services/common/removeSensitiveFields.
 const buildQuery = (filters)=>{
     let query = {};
 
-    if(filters.fName){
+    if(filters.fName)
         query.fName = {$regex: filters.fName, $options: 'i'};
-    }
-    if(filters.lName){
+    if(filters.lName)
         query.lName = {$regex: filters.lName, $options: 'i'};
-    }
-    if(filters.gender){
+    if(filters.gender)
         query.gender = filters.gender;
-    }
-    if(filters.phone){
+    if(filters.phone)
         query.phone = filters.phone;
-    }
     filters.status ? query.status = filters.status : query.status = true;
 
     return query;

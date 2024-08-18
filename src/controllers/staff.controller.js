@@ -11,27 +11,20 @@ const getPaginationData = require('../services/common/queryString.service');
 const buildQuery = (filters)=>{
     let query = {};
 
-    if(filters.fName){
+    if(filters.fName)
         query.fName = {$regex: filters.fName, $options: 'i'};
-    }
-    if(filters.lName){
+    if(filters.lName)
         query.lName = {$regex: filters.lName, $options: 'i'};
-    }
-    if(filters.phone){
+    if(filters.phone)
         query.phone = filters.phone;
-    }
-    if(filters.gender){
+    if(filters.gender)
         query.gender = filters.gender;
-    }
-    if(filters.email){
+    if(filters.email)
         query.email = filters.email;
-    }
-    if(filters.jobRole){
+    if(filters.jobRole)
         query.jobRole = filters.jobRole;
-    }
-    if(baseSalary){
+    if(filters.baseSalary)
         query.baseSalary = {$gte: filters.baseSalary};
-    }
     filters.status ? query.status = filters.status : query.status = true;
 
     return query;

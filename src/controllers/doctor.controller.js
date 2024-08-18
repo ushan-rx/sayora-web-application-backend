@@ -13,33 +13,24 @@ const getPaginationData = require('../services/common/queryString.service');
 const buildQuery = (filters)=>{
     let query = {};
 
-    if(filters.fName){
+    if(filters.fName)
         query.fName = {$regex: filters.fName, $options: 'i'};
-    }
-    if(filters.lName){
+    if(filters.lName)
         query.lName = {$regex: filters.lName, $options: 'i'};
-    }
-    if(filters.specialization){
+    if(filters.specialization)
         query.specialization = filters.specialization;
-    }
-    if(filters.availability){
+    if(filters.availability)
         query.availability = filters.availability;
-    }
-    if(filters.treatments){
+    if(filters.treatments)
         query.treatments = filters.treatments;
-    }
-    if(filters.minExperience){
+    if(filters.minExperience)
         query.experience = {$gte: filters.minExperience};
-    }
-    if(filters.gender){
+    if(filters.gender)
         query.gender = filters.gender;
-    }
-    if(filters.email){
+    if(filters.email)
         query.email = filters.email;
-    }
-    if(filters.sort){
+    if(filters.sort)
         query.sort = filters.sort;
-    }
 
     filters.status ? query.status = filters.status : query.status = true;
     

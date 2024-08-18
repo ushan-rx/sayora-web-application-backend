@@ -12,18 +12,14 @@ const getPaginationData = require('../services/common/queryString.service');
 const buildQuery = (filters) => {
     let query = {};
 
-    if (filters.patientId) {
+    if (filters.patientId) 
         query.patientId = filters.patientId;
-    }
-    if (filters.doctorId) {
+    if (filters.doctorId) 
         query.doctorId = filters.doctorId;
-    }
-    if (filters.sickness) {
+    if (filters.sickness) 
         query.sickness = { $regex: filters.sickness, $options: 'i' };
-    }
-    if (filters.date) {
+    if (filters.date) 
         query.date = filters.date;
-    }
 
     filters.status ? query.status = filters.status : query.status = true;
 
