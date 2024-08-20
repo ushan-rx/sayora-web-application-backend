@@ -8,7 +8,6 @@ const { getPatientsService,
         updatePatientService, 
         deletePatientService } = require('../services/patient.service');
 const getPaginationData = require('../services/common/queryString.service');
-const removeSensitiveFields = require('../services/common/removeSensitiveFields.service');
 
 const buildQuery = (filters)=>{
     let query = {};
@@ -42,9 +41,8 @@ const getPatients = async (req, res, next) =>{
         if(!data || data.length === 0){
             res.status(StatusCodes.OK).json({message: 'No patients found', data: []});
         }else{
-            resData = removeSensitiveFields(data);
             res.status(StatusCodes.OK).json({
-                data: resData,
+                data: data,
                 totalItems: count,
                 page: pagination.page,
                 limit: pagination.limit,
