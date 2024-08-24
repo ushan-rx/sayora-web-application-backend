@@ -1,9 +1,11 @@
-const CustomError = require('../errors');
-const { StatusCodes } = require('http-status-codes');
-const { getRegularPatientsService,
-        createRegularPatientService,
-        deleteRegularPatientService } = require('../services/regularPatient.service');
-const getPaginationData = require('../services/common/queryString.service');
+import CustomError from '../errors/custom-api.js';
+import { StatusCodes } from 'http-status-codes';
+import { 
+    getRegularPatientsService,
+    createRegularPatientService,
+    deleteRegularPatientService 
+} from '../services/regularPatient.service.js';
+import getPaginationData from '../services/common/queryString.service.js';
 
 const buildQuery = (filters) => {
     let query = {};
@@ -12,12 +14,12 @@ const buildQuery = (filters) => {
         query.doctorId = filters.doctorId;
     if (filters.patient)
         query.patient = filters.patient;
-    filters.status ? query.status = filters.status : query.status = true;
+    query.status = filters.status || true;
 
     return query;
-}
+};
 
-const getRegularPatients = async (req, res, next) => {
+export const getRegularPatients = async (req, res, next) => {
     try {
         const filters = buildQuery(req.query);
         const pagination = getPaginationData(req.query);
@@ -38,10 +40,9 @@ const getRegularPatients = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+};
 
-
-const createRegularPatient = async (req, res, next) => {
+export const createRegularPatient = async (req, res, next) => {
     try {
         const regularPatient = await createRegularPatientService(req.body);
         if (!regularPatient) {
@@ -51,9 +52,9 @@ const createRegularPatient = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+};
 
-const deleteRegularPatient = async (req, res, next) => {
+export const deleteRegularPatient = async (req, res, next) => {
     try {
         const regularPatientId = req.params.id;
         const regularPatient = await deleteRegularPatientService(regularPatientId);
@@ -64,10 +65,4 @@ const deleteRegularPatient = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
-
-module.exports = {
-    getRegularPatients,
-    createRegularPatient,
-    deleteRegularPatient,
-}
+};

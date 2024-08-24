@@ -1,4 +1,4 @@
-const CustomAPIError = require('./custom-api');
+import CustomAPIError from './custom-api.js';
 
 class DBError extends CustomAPIError {
     constructor(message) {
@@ -7,4 +7,4 @@ class DBError extends CustomAPIError {
     }
 }
 
-module.exports = DBError;
+export default DBError;

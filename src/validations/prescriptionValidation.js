@@ -1,4 +1,4 @@
-const Yup = require('yup');
+import * as Yup from 'yup';
 
 const prescriptionSchema = Yup.object().shape({
     patientId: Yup.string(),
@@ -16,4 +16,4 @@ const prescriptionSchema = Yup.object().shape({
     date: Yup.date()
 });
 
-module.exports = prescriptionSchema;
+export default prescriptionSchema;

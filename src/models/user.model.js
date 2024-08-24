@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-// const bcrypt = require('bcryptjs');
-const generateID = require('../services/common/generateID.service');
+import mongoose from 'mongoose';
+// import bcrypt from 'bcryptjs';
+import generateID from '../services/common/generateID.service.js';
 
 const UserSchema = new mongoose.Schema({
     userId: { type: String, required: true, unique: true },
@@ -40,4 +40,5 @@ UserSchema.pre('validate', async function (next) {
 // };
 
 const User = mongoose.model('User', UserSchema);
-module.exports = User;
+
+export default User;

@@ -1,4 +1,4 @@
-const yup = require('yup');
+import * as yup from 'yup';
 
 const patientSchema = yup.object({
     patientId: yup.string().max(8).min(8),
@@ -75,6 +75,6 @@ const patientSchema = yup.object({
         date: yup.date(), 
     }),
 
-})
+});
 
-module.exports = patientSchema;
+export default patientSchema;

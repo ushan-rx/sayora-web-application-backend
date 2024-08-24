@@ -1,20 +1,18 @@
-const express = require('express');
-const router = express.Router();
-const validate = require('../../../middlewares/requestValidator')
-const staffSchema = require('../../../validations/staffValidation');
-const sanitizeMiddleware  = require('../../../middlewares/requestSanitizer');
+// import express from 'express';
+// import validate from '../../../middlewares/requestValidator.js';
+// // import staffSchema from '../../../validations/staffValidation.js';
+// import sanitizeMiddleware from '../../../middlewares/requestSanitizer.js';
+// import { createStaff, getStaff, getStaffs, updateStaff, deleteStaff } from '../../../controllers/staff.controller.js';
 
-const { createStaff,
-        getStaff,
-        getStaffs,
-        updateStaff, 
-        deleteStaff } = require('../../../controllers/staff.controller');
+// const router = express.Router();
 
-router.route('/').post(sanitizeMiddleware, validate(staffSchema), createStaff)
-.get(sanitizeMiddleware, validate(staffSchema), getStaffs);      // 'v1/staff/'
+// router.route('/')
+//     .post(sanitizeMiddleware, validate(staffSchema), createStaff)
+//     .get(sanitizeMiddleware, validate(staffSchema), getStaffs); // 'v1/staff/'
 
-router.route('/:id').get(sanitizeMiddleware, validate(staffSchema), getStaff)      // 'v1/staff/STF00001'
-        .put(sanitizeMiddleware, validate(staffSchema), updateStaff)
-        .delete(sanitizeMiddleware, validate(staffSchema), deleteStaff);
+// router.route('/:id')
+//     .get(sanitizeMiddleware, validate(staffSchema), getStaff) // 'v1/staff/STF00001'
+//     .put(sanitizeMiddleware, validate(staffSchema), updateStaff)
+//     .delete(sanitizeMiddleware, validate(staffSchema), deleteStaff);
 
-module.exports = router;
+// export default router;

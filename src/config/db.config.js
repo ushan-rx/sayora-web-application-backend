@@ -1,16 +1,14 @@
-const DBError = require('../errors/db-error');
-const ENVIRONMENT = require('./env.config');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import DBError from '../errors/db-error.js';
+import ENVIRONMENT from './env.config.js';
 
-
-const connectDB  = async () =>{
+const connectDB = async () => {
     try {
-        await mongoose.connect(ENVIRONMENT.MONGO_URI)
+        await mongoose.connect(ENVIRONMENT.MONGO_URI);
         console.log('Database connected successfully');
     } catch (error) {
         throw new DBError(error.message);
     }
-}
+};
 
-
-module.exports = connectDB;
+export default connectDB;

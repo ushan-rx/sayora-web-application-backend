@@ -1,6 +1,16 @@
-const Prescription = require('../models/prescription.model');
+import Prescription from '../models/prescription.model.js';
 
-const getPrescriptionsService = async ({ filters, pagination }) => {
+/**
+ * Retrieves prescriptions based on provided filters and pagination options.
+ * @param {Object} options - The options for filtering and pagination.
+ * @param {Object} options.filters - The filters to apply when querying prescriptions.
+ * @param {Object} options.pagination - The pagination options.
+ * @param {Object} options.pagination.sort - The sorting criteria.
+ * @param {number} options.pagination.skip - The number of documents to skip.
+ * @param {number} options.pagination.limit - The maximum number of documents to retrieve.
+ * @returns {Promise<Object>} The retrieved prescriptions and the total count.
+ */
+export const getPrescriptionsService = async ({ filters, pagination }) => {
     const count = await Prescription.countDocuments(filters);
     if (pagination.limit > count) pagination.limit = count;
     const data = await Prescription.find(filters)
@@ -9,31 +19,23 @@ const getPrescriptionsService = async ({ filters, pagination }) => {
         .limit(pagination.limit)
         .lean();
     return { data, count };
-}
+};
 
-const createPrescriptionService = async (data) => {
+export const createPrescriptionService = async (data) => {
     return await new Prescription(data).save();
-}
+};
 
-const getPrescriptionService = async (prescriptionId) => {
+export const getPrescriptionService = async (prescriptionId) => {
     return await Prescription.findOne({ _id: prescriptionId }).lean();
-}
+};
 
-const updatePrescriptionService = async (prescriptionId, data) => {
+export const updatePrescriptionService = async (prescriptionId, data) => {
     return await Prescription.findOneAndUpdate({ _id: prescriptionId }, data, {
         new: true,
         runValidators: true
     }).lean();
-}
+};
 
-const deletePrescriptionService = async (prescriptionId) => {
+export const deletePrescriptionService = async (prescriptionId) => {
     return await Prescription.findOneAndDelete({ _id: prescriptionId }).lean();
-}
-
-module.exports = {
-    getPrescriptionsService,
-    createPrescriptionService,
-    getPrescriptionService,
-    updatePrescriptionService,
-    deletePrescriptionService
-}
+};

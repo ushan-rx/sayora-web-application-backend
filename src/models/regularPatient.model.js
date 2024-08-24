@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const regularPatientSchema = new mongoose.Schema({
     patient: {
@@ -18,4 +18,4 @@ const regularPatientSchema = new mongoose.Schema({
 
 const RegularPatient = mongoose.model('RegularPatient', regularPatientSchema);
 
-module.exports = RegularPatient;
+export default RegularPatient;

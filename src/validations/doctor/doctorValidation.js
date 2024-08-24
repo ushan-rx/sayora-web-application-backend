@@ -1,9 +1,8 @@
-const yup = require('yup');
+import * as yup from 'yup';
 
 const doctorSchema = yup.object({
     doctorId: yup.string().max(8).min(8),
     userId: yup.string().max(8).min(8),
-
     fName: yup.string().max(50).min(2),
     lName: yup.string().max(50).min(2),
     phone: yup.string().matches(
@@ -28,5 +27,4 @@ const doctorSchema = yup.object({
 });
 
 
-
-module.exports = doctorSchema;
+export default doctorSchema;

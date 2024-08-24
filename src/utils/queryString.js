@@ -13,4 +13,4 @@ const getPaginationData = (query) => {
     return { sort, limit, page, skip };
 }
 
-module.exports = getPaginationData;
+export default getPaginationData;

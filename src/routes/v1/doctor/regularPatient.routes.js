@@ -1,12 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const validate = require('../../../middlewares/requestValidator');
-const regularPatientSchema = require('../../../validations/regularPatient/regularPatientValidation');
-const sanitizeMiddleware = require('../../../middlewares/requestSanitizer');
+import express from 'express';
+import validate from '../../../middlewares/requestValidator.js';
+import regularPatientSchema from '../../../validations/regularPatient/regularPatientValidation.js';
+import sanitizeMiddleware from '../../../middlewares/requestSanitizer.js';
+import { createRegularPatient, getRegularPatients, deleteRegularPatient } from '../../../controllers/regularPatient.controller.js';
 
-const { createRegularPatient, 
-        getRegularPatients, 
-        deleteRegularPatient } = require('../../../controllers/regularPatient.controller');
+const router = express.Router();
 
 router.route('/')
     .post(sanitizeMiddleware, validate(regularPatientSchema), createRegularPatient)
@@ -15,4 +13,4 @@ router.route('/')
 router.route('/:id')
     .delete(sanitizeMiddleware, validate(regularPatientSchema), deleteRegularPatient);
 
-module.exports = router;
+export default router;

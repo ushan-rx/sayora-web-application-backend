@@ -1,13 +1,13 @@
-const CustomError = require('../errors');
-const { StatusCodes } = require('http-status-codes');
-const {
+import CustomError from '../errors/custom-api.js';
+import { StatusCodes } from 'http-status-codes';
+import { 
     getPrescriptionsService,
     createPrescriptionService,
     getPrescriptionService,
     updatePrescriptionService,
-    deletePrescriptionService
-} = require('../services/prescription.service');
-const getPaginationData = require('../services/common/queryString.service');
+    deletePrescriptionService 
+} from '../services/prescription.service.js';
+import getPaginationData from '../utils/queryString.js';
 
 const buildQuery = (filters) => {
     let query = {};
@@ -21,12 +21,12 @@ const buildQuery = (filters) => {
     if (filters.date) 
         query.date = filters.date;
 
-    filters.status ? query.status = filters.status : query.status = true;
+    query.status = filters.status || true;
 
     return query;
-}
+};
 
-const getPrescriptions = async (req, res, next) => {
+export const getPrescriptions = async (req, res, next) => {
     try {
         const filters = buildQuery(req.query);
         const pagination = getPaginationData(req.query);
@@ -47,9 +47,9 @@ const getPrescriptions = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+};
 
-const getPrescription = async (req, res, next) => {
+export const getPrescription = async (req, res, next) => {
     try {
         const prescriptionId = req.params.id;
         const prescription = await getPrescriptionService(prescriptionId);
@@ -61,9 +61,9 @@ const getPrescription = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+};
 
-const createPrescription = async (req, res, next) => {
+export const createPrescription = async (req, res, next) => {
     try {
         const prescription = await createPrescriptionService(req.body);
         if (!prescription) {
@@ -73,9 +73,9 @@ const createPrescription = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+};
 
-const updatePrescription = async (req, res, next) => {
+export const updatePrescription = async (req, res, next) => {
     try {
         const prescriptionId = req.params.id;
         const updatedPrescription = await updatePrescriptionService(prescriptionId, req.body);
@@ -86,9 +86,9 @@ const updatePrescription = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+};
 
-const deletePrescription = async (req, res, next) => {
+export const deletePrescription = async (req, res, next) => {
     try {
         const prescriptionId = req.params.id;
         const prescription = await deletePrescriptionService(prescriptionId);
@@ -99,12 +99,4 @@ const deletePrescription = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
-
-module.exports = {
-    getPrescription,
-    getPrescriptions,
-    createPrescription,
-    updatePrescription,
-    deletePrescription,
-}
+};

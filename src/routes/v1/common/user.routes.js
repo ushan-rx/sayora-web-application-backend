@@ -1,10 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const validate = require('../../../middlewares/requestValidator');
-const userSchema = require('../../../validations/userValidation');
-const sanitizeMiddleware = require('../../../middlewares/requestSanitizer');
+import express from 'express';
+import validate from '../../../middlewares/requestValidator.js';
+import userSchema from '../../../validations/userValidation.js';
+import sanitizeMiddleware from '../../../middlewares/requestSanitizer.js';
+import { createUser, getUser, getUsers, updateUser, deleteUser } from '../../../controllers/user.controller.js';
 
-const { createUser, getUser, getUsers, updateUser, deleteUser } = require('../../../controllers/user.controller');
+const router = express.Router();
 
 router.route('/')
     .post(sanitizeMiddleware, validate(userSchema), createUser)
@@ -15,4 +15,4 @@ router.route('/:id')
     .put(sanitizeMiddleware, validate(userSchema), updateUser)
     .delete(sanitizeMiddleware, validate(userSchema), deleteUser);
 
-module.exports = router;
+export default router;

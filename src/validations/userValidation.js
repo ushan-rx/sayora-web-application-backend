@@ -1,4 +1,4 @@
-const yup = require('yup');
+import * as yup from 'yup';
 
 const userSchema = yup.object().shape({
     firstName: yup
@@ -30,4 +30,4 @@ const userSchema = yup.object().shape({
         .default(true)
 });
 
-module.exports = userSchema;
+export default userSchema;

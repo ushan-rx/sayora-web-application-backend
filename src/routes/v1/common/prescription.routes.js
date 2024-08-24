@@ -1,16 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const validate = require('../../../middlewares/requestValidator');
-const prescriptionSchema = require('../../../validations/prescriptionValidation');
-const sanitizeMiddleware  = require('../../../middlewares/requestSanitizer');
+import express from 'express';
+import validate from '../../../middlewares/requestValidator.js';
+import prescriptionSchema from '../../../validations/prescriptionValidation.js';
+import sanitizeMiddleware from '../../../middlewares/requestSanitizer.js';
+import { createPrescription, getPrescription, getPrescriptions, updatePrescription, deletePrescription } from '../../../controllers/prescription.controller.js';
 
-const {
-    createPrescription,
-    getPrescription,
-    getPrescriptions,
-    updatePrescription,
-    deletePrescription
-} = require('../../../controllers/prescription.controller');
+const router = express.Router();
 
 router.route('/')
     .post(sanitizeMiddleware, validate(prescriptionSchema), createPrescription)
@@ -21,4 +15,4 @@ router.route('/:id')
     .put(sanitizeMiddleware, validate(prescriptionSchema), updatePrescription)
     .delete(sanitizeMiddleware, validate(prescriptionSchema), deletePrescription);
 
-module.exports = router;
+export default router;

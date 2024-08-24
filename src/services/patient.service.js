@@ -1,4 +1,4 @@
-const Patient = require("../models/patient.model");
+import Patient from '../models/patient.model.js';
 
 /**
  * Retrieves a list of patients based on the provided filters and pagination options.
@@ -10,44 +10,34 @@ const Patient = require("../models/patient.model");
  * @param {string} options.pagination.sort - The field to sort the patients by.
  * @returns {Promise<Object>} - A promise that resolves to an object containing the retrieved patients and the total count.
  */
- const getPatientsService = async ({ filters, pagination }) => {
-     const count = await Patient.countDocuments(filters);
-     if(pagination.limit > count) pagination.limit = count;
-     const data = await Patient.find(filters)
-         .sort(pagination.sort)
-         .skip(pagination.skip)
-         .limit(pagination.limit)
-         .lean();
-     return {data, count};
- }
+export const getPatientsService = async ({ filters, pagination }) => {
+    const count = await Patient.countDocuments(filters);
+    if (pagination.limit > count) pagination.limit = count;
+    const data = await Patient.find(filters)
+        .sort(pagination.sort)
+        .skip(pagination.skip)
+        .limit(pagination.limit)
+        .lean();
+    return { data, count };
+};
 
- const createPatientService = async (data) => {
+export const createPatientService = async (data) => {
     return await new Patient(data).save();
- }
+};
 
- const getPatientService = async (patientId) => {
-     return await Patient.findOne({patientId: patientId}).lean();
- }
+export const getPatientService = async (patientId) => {
+    return await Patient.findOne({ patientId }).lean();
+};
 
- const getPatientByIDService = async (id) => {
-     return await Patient.findById(id).lean();
- }
+export const getPatientByIDService = async (id) => {
+    return await Patient.findById(id).lean();
+};
 
- const updatePatientService = async (id, data) => {
+export const updatePatientService = async (id, data) => {
     return await Patient.findOneAndUpdate({ patientId: id }, data, 
-        {new: true, runValidators: true}).lean();
- }
+        { new: true, runValidators: true }).lean();
+};
 
- const deletePatientService = async (id) => {
-    return await Patient.findOneAndDelete({patientId: id}).lean();
- }
-
- module.exports = {
-        getPatientsService,
-        createPatientService,
-        getPatientService,
-        getPatientByIDService,
-        updatePatientService,
-        deletePatientService,
- }
-
+export const deletePatientService = async (id) => {
+    return await Patient.findOneAndDelete({ patientId: id }).lean();
+};

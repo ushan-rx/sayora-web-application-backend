@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const generateID = require("../services/common/generateID.service");
+import mongoose from "mongoose";
+import generateID from "../utils/generateID.js";
 
 //vitals subdocuments
 
@@ -213,4 +213,4 @@ patientSchema.pre("validate", async function (next) {
 // Create the patient model
 const Patient = mongoose.model("Patient", patientSchema);
 
-module.exports = Patient;
+export default Patient;

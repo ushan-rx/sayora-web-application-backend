@@ -1,4 +1,4 @@
-const yup = require('yup');
+import * as yup from 'yup';
 
 const regularPatientSchema = yup.object({
     patient: yup.string(),
@@ -6,4 +6,4 @@ const regularPatientSchema = yup.object({
     status: yup.boolean(),
 });
 
-module.exports = regularPatientSchema;
+export default regularPatientSchema;
