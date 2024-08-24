@@ -1,21 +1,18 @@
-const yup = require('yup');
-const customError = require('../errors');
+import { CustomAPIError } from '../errors/index.js';
 
 const validate = (schema) => async (req, res, next) => {
-    const { body, query, param} = req;
+    const { body, query, params } = req; // Fixed typo: changed 'param' to 'params'
     try {
         await schema.validate(body);
         await schema.validate(query);
-        await schema.validate(param);
-        
+        await schema.validate(params);
+
         next();
     } catch (error) {
-        const validationError = new customError.BadRequestError('Invalid request data');
+        const validationError = new CustomAPIError.BadRequestError('Invalid request data');
         validationError.stack = error.stack;
         next(validationError);
     }
 }
 
-
-
-module.exports = validate;
+export default validate;

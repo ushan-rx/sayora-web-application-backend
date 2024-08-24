@@ -1,4 +1,4 @@
-const Doctor = require('../models/doctor.model');
+import Doctor from '../models/doctor.model.js';
 
 /**
  * Retrieves doctors based on provided filters and pagination options.
@@ -12,21 +12,21 @@ const Doctor = require('../models/doctor.model');
  */
 const getDoctorsService = async ({ filters, pagination }) => {
     const count = await Doctor.countDocuments(filters);
-    if(pagination.limit > count) pagination.limit = count;
+    if (pagination.limit > count) pagination.limit = count;
     const data = await Doctor.find(filters)
         .sort(pagination.sort)
         .skip(pagination.skip)
         .limit(pagination.limit)
         .lean();
-    return {data, count};
+    return { data, count };
 }
 
 const createDoctorService = async (data) => {
-    return await new Doctor(data).save().lean();
+    return await new Doctor(data).save();
 }
 
 const getDoctorService = async (doctorId) => {
-    return await Doctor.findOne({doctorId: doctorId}).lean();
+    return await Doctor.findOne({ doctorId: doctorId }).lean();
 }
 
 const getDoctorByIDService = async (id) => {
@@ -34,16 +34,14 @@ const getDoctorByIDService = async (id) => {
 }
 
 const updateDoctorService = async (id, data) => {
-    return await Doctor.findOneAndUpdate({ doctorId: id }, data,
-         {new: true, runValidators: true}).lean();
+    return await Doctor.findOneAndUpdate({ doctorId: id }, data, { new: true, runValidators: true }).lean();
 }
 
-const deleteDoctorService = async (id) =>{
-    return await Doctor.findOneAndDelete({doctorId: id}).lean();
+const deleteDoctorService = async (id) => {
+    return await Doctor.findOneAndDelete({ doctorId: id }).lean();
 }
 
-
-module.exports = {
+export {
     getDoctorsService,
     createDoctorService,
     getDoctorService,

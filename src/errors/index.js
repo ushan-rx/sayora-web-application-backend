@@ -1,13 +1,13 @@
-const CustomAPIError = require('./custom-api');
-const NotFoundError = require('./not-found');
-const BadRequestError = require('./bad-request');
-const InternalServerError = require('./server-error');
-const DBError = require('./db-error');
+import CustomAPIError from './custom-api.js';
+import NotFoundError from './not-found.js';
+import BadRequestError from './bad-request.js';
+import InternalServerError from './server-error.js';
+import DBError from './db-error.js';
 
-module.exports = {
+export {
     CustomAPIError,
     NotFoundError,
     BadRequestError,
     InternalServerError,
     DBError
-}
+};

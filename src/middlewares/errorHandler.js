@@ -1,8 +1,8 @@
-const ENVIROMENT = require('../config/env.config');
+import ENVIROMENT from '../config/env.config.js';
 
 const errorHandler = (err, req, res, next) => {
-    let statusCode = err.statusCode || 500;
-    let message = err.message || 'Internal Server Error';
+    const statusCode = err.statusCode || 500;
+    const message = err.message || 'Internal Server Error';
 
     // Log the error details for debugging
     console.error(`[${new Date().toISOString()}] ${err.name}: ${message} \n ${err.stack}`);
@@ -16,6 +16,6 @@ const errorHandler = (err, req, res, next) => {
             stack: ENVIROMENT.NODE_ENV === 'development' ? err.stack : undefined
         }
     });
-}
+};
 
-module.exports = errorHandler;
+export default errorHandler;
