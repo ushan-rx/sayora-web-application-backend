@@ -1,11 +1,11 @@
-import CustomError from '../errors/custom-api.js';
+import CustomError from '../errors/index.js';
 import { StatusCodes } from 'http-status-codes';
 import { 
     getRegularPatientsService,
     createRegularPatientService,
     deleteRegularPatientService 
 } from '../services/regularPatient.service.js';
-import getPaginationData from '../services/common/queryString.service.js';
+import getPaginationData from '../utils/queryString.js';
 
 const buildQuery = (filters) => {
     let query = {};
