@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import generateID from '../utils/generateID.js';
 
 const UserSchema = new mongoose.Schema({
-    userId: { type: String, required: true, unique: true },
+    userId: { type: String, required: true, unique: true, index: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
@@ -24,13 +24,19 @@ const UserSchema = new mongoose.Schema({
 // });
 
 // Pre-validate hook to generate userId
-const customIdPrefix = 'USR';
-const length = 5;
+const prefix = 'UR';
+const length = 12;
 
 UserSchema.pre('validate', async function (next) {
     const MyModel = this.constructor;
-    let lastDoc = await MyModel.find().sort({ _id: -1 }).limit(1);
-    this.userId = generateID(customIdPrefix, lastDoc[0] ? lastDoc[0].userId : null, length);
+    // Generate the new custom ID
+    let userId = await generateID(MyModel, prefix, 'userId', length);
+    if (userId != null && userId != undefined) {
+        this.userId = userId;
+        next();
+    } else {
+        next(new Error('Error in ID generation'));
+    }
     next();
 });
 

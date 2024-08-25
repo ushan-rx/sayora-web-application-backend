@@ -1,14 +1,9 @@
 import mongoose from 'mongoose';
 
 const prescriptionSchema = new mongoose.Schema({
-  prescriptionId: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   patientId: {
     type: String,
-    required: true
+    required: true,
   },
   doctorId: {
     type: String,
@@ -39,6 +34,10 @@ const prescriptionSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  status: {
+    type: Boolean,
+    default: true
   }
 }, { timestamps: true });
 

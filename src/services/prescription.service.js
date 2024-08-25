@@ -26,8 +26,8 @@ export const createPrescriptionService = async (data) => {
 };
 
 export const getPrescriptionService = async (prescriptionId) => {
-    return await Prescription.findOne({ _id: prescriptionId }).lean();
-};
+    return await Prescription.findById(prescriptionId).lean();
+};  
 
 export const updatePrescriptionService = async (prescriptionId, data) => {
     return await Prescription.findOneAndUpdate({ _id: prescriptionId }, data, {
