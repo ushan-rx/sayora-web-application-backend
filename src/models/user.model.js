@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 // import bcrypt from 'bcryptjs';
-import generateID from '../services/common/generateID.service.js';
+import generateID from '../utils/generateID.js';
 
 const UserSchema = new mongoose.Schema({
     userId: { type: String, required: true, unique: true },

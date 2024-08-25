@@ -3,6 +3,7 @@ import validate from '../../../middlewares/requestValidator.js';
 import prescriptionSchema from '../../../validations/prescriptionValidation.js';
 import sanitizeMiddleware from '../../../middlewares/requestSanitizer.js';
 import { createPrescription, getPrescription, getPrescriptions, updatePrescription, deletePrescription } from '../../../controllers/prescription.controller.js';
+import methodNotAllowed from '../../../middlewares/invalidRouteHandler.js';
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.route('/')
 router.route('/:id')
     .get(sanitizeMiddleware, validate(prescriptionSchema), getPrescription)
     .put(sanitizeMiddleware, validate(prescriptionSchema), updatePrescription)
-    .delete(sanitizeMiddleware, validate(prescriptionSchema), deletePrescription);
+    .delete(sanitizeMiddleware, validate(prescriptionSchema), deletePrescription)
+    .all(methodNotAllowed());
 
 export default router;

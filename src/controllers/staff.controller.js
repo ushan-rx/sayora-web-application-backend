@@ -1,4 +1,4 @@
-import CustomError from '../errors/custom-api.js';
+import CustomError from '../errors/index.js';
 import { StatusCodes } from 'http-status-codes';
 import { 
     getStaffsService,
@@ -7,7 +7,7 @@ import {
     updateStaffService,
     deleteStaffService 
 } from '../services/staff.service.js';
-import getPaginationData from '../services/common/queryString.service.js';
+import getPaginationData from '../utils/queryString.js';
 
 const buildQuery = (filters) => {
     let query = {};

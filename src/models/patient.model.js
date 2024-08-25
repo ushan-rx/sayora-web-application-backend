@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import generateID from "../utils/generateID.js";
 
 //vitals subdocuments
-
 const bloodPressureSchema = new mongoose.Schema({
   date: {
       type: Date,
@@ -197,17 +196,20 @@ const patientSchema = new mongoose.Schema({
 
 
 //for id generation
-const customIdPrefix = "PAT";
-const length = 5;
+const prefix = "PT";
+const length = 10;
 
 // Pre-save hook to generate id
 patientSchema.pre("validate", async function (next) {
   const MyModel = this.constructor;
-  // Find the last document with a custom ID starting with the provided prefix
-  let lastPatient = await MyModel.find().sort({ _id: -1 }).limit(1);
-  // Generate the new custom ID
-  this.patientId = generateID(customIdPrefix, lastPatient[0] ? lastPatient[0].patientId : null, length);
-  next();
+
+  let patientId = await generateID(MyModel, prefix, "patientId", length);
+  if (patientId != null && patientId != undefined) {
+      this.patientId = patientId;
+      next();
+  } else {
+      next(new Error("Error in ID generation"));
+  }
 });
 
 // Create the patient model

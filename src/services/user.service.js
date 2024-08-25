@@ -1,4 +1,4 @@
-const User = require('../models/user.model');
+import User from '../models/user.model.js';
 
 const getUsersService = async ({ filters, pagination }) => {
     const count = await User.countDocuments(filters);
@@ -31,7 +31,7 @@ const deleteUserService = async (id) => {
     return await User.findOneAndDelete({ userId: id }).lean();
 };
 
-module.exports = {
+export{
     getUsersService,
     createUserService,
     getUserService,

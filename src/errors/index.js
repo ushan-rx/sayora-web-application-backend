@@ -3,11 +3,15 @@ import NotFoundError from './not-found.js';
 import BadRequestError from './bad-request.js';
 import InternalServerError from './server-error.js';
 import DBError from './db-error.js';
+import MethodNotAllowedError from './not-allowed.js';
 
-export {
+const CustomError = {
     CustomAPIError,
     NotFoundError,
     BadRequestError,
     InternalServerError,
-    DBError
+    DBError,
+    MethodNotAllowedError
 };
+
+export default CustomError;

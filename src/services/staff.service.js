@@ -1,4 +1,4 @@
-const Staff = require('../models/staff.model');
+import Staff from '../models/staff.model.js';
 
 const getStaffsService = async ({ filters, pagination }) => {
     const count = await Staff.countDocuments(filters);
@@ -34,11 +34,11 @@ const deleteStaffService = async (id) =>{
     return await Staff.findOneAndDelete({staffId: id}).lean();
 }
 
-module.exports = {
+export {
     getStaffsService,
     createStaffService,
     getStaffService,
-    getStaffByIDService,
     updateStaffService,
-    deleteStaffService
+    deleteStaffService,
+    getStaffByIDService
 }

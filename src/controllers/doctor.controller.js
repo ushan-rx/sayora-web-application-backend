@@ -1,4 +1,4 @@
-import CustomError from '../errors/custom-api.js';
+import CustomError from '../errors/index.js';
 import { StatusCodes } from 'http-status-codes';
 import { 
     getDoctorsService,

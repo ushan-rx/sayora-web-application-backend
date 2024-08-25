@@ -1,5 +1,12 @@
 import { customAlphabet } from 'nanoid';
 
+
+// Function to generate a unique ID for a record
+// model: The Mongoose model to check for existing records
+// prefix: The prefix to add to the generated ID
+// fieldName: The field name to check for existing records
+// randomLength: The length of the random part of the ID
+// returns a unique ID (prefix + random part) length will be prefix length + randomLength 
 const generateID = async (model, prefix, fieldName, randomLength) => {
     // Define the alphabet for the custom
     const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
