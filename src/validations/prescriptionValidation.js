@@ -1,6 +1,8 @@
 import * as Yup from 'yup';
+import objectIdValidation from './mongoIdVAlidation.js';
 
 const prescriptionSchema = Yup.object().shape({
+    id: objectIdValidation,
     patientId: Yup.string(),
     doctorId: Yup.string(),
     doctorName: Yup.string(),

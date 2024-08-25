@@ -30,18 +30,17 @@ export const getPrescriptions = async (req, res, next) => {
     try {
         const filters = buildQuery(req.query);
         const pagination = getPaginationData(req.query);
-
-        const prescriptions = await getPrescriptionsService({ filters, pagination });
-
-        if (!prescriptions.data || prescriptions.data.length === 0) {
+        console.log(filters)
+        const {data, count} = await getPrescriptionsService({ filters, pagination });
+        if (!data || data.length === 0) {
             res.status(StatusCodes.OK).json({ message: 'No prescriptions found', data: [] });
         } else {
             res.status(StatusCodes.OK).json({
-                data: prescriptions.data,
-                totalItems: prescriptions.count,
+                data,
+                totalItems: count,
                 currentPage: pagination.page,
                 limit: pagination.limit,
-                totalPages: Math.ceil(prescriptions.count / pagination.limit)
+                totalPages: Math.ceil(count / pagination.limit)
             });
         }
     } catch (error) {

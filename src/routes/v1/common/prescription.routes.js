@@ -9,7 +9,8 @@ const router = express.Router();
 
 router.route('/')
     .post(sanitizeMiddleware, validate(prescriptionSchema), createPrescription)
-    .get(sanitizeMiddleware, validate(prescriptionSchema), getPrescriptions);
+    .get(sanitizeMiddleware, validate(prescriptionSchema), getPrescriptions)
+    .all(methodNotAllowed());
 
 router.route('/:id')
     .get(sanitizeMiddleware, validate(prescriptionSchema), getPrescription)

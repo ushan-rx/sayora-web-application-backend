@@ -30,4 +30,5 @@ const userSchema = yup.object().shape({
         .default(true)
 });
 
+
 export default userSchema;

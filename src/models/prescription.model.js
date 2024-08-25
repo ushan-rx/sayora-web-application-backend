@@ -4,7 +4,6 @@ const prescriptionSchema = new mongoose.Schema({
   patientId: {
     type: String,
     required: true,
-    index: true
   },
   doctorId: {
     type: String,
@@ -35,6 +34,10 @@ const prescriptionSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  status: {
+    type: Boolean,
+    default: true
   }
 }, { timestamps: true });
 
