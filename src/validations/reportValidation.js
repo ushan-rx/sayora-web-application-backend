@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import objectIdValidation from './mongoIdValidation.js';
 
 const reportValidationSchema = Yup.object().shape({
   id: objectIdValidation,

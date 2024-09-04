@@ -34,7 +34,8 @@ const getDoctorByIDService = async (id) => {
 }
 
 const updateDoctorService = async (id, data) => {
-    return await Doctor.findOneAndUpdate({ doctorId: id }, data, { new: true, runValidators: true }).lean();
+    return await Doctor.findOneAndUpdate({ doctorId: id }, data, 
+        { new: true, runValidators: true }).lean();
 }
 
 const deleteDoctorService = async (id) => {

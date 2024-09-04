@@ -1,4 +1,4 @@
-import Report from "../models/report.model";
+import Report from "../models/report.model.js";
 
 
 const getReportsService = async ({ filters, pagination }) => {
