@@ -173,14 +173,15 @@ const patientSchema = new mongoose.Schema({
     },
   ],
 
-  prescriptions: {
-    doctorId: {type: String,},
-    medications: [{medication: {type: String,},dosage: {type: String,}, frequency: {type: String,}}],
-    instructions: {type: String,},
-    disease: {type: String,},
-    date: {type: Date,default: Date.now}
-  },
-
+  prescriptions: [
+    {
+      prescriptionRecord: {
+        type: mongoose.Schema.Types.ObjectId, // prescription referenced
+        ref: "Prescription",
+      },
+    },
+  ],
+  
   bloodPressure: [bloodPressureSchema],
   height: [heightSchema],
   weight: [weightSchema],
