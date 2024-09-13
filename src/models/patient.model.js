@@ -176,7 +176,7 @@ const patientSchema = new mongoose.Schema({
   prescriptions: [
     {
       prescriptionRecord: {
-        type: mongoose.Schema.Types.ObjectId, // prescription referenced
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Prescription",
       },
     },

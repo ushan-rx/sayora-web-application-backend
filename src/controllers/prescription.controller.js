@@ -1,14 +1,13 @@
 import CustomError from '../errors/index.js';
 import { StatusCodes } from 'http-status-codes';
-import {
-    getPatientService,
-    updatePatientService } from '../services/patient.service.js';
+import { updatePatientService } from '../services/patient.service.js';
+import { validatePatient } from '../controllers/patient.controller.js';
 import { 
     getPrescriptionsService,
     createPrescriptionService,
     getPrescriptionService,
     updatePrescriptionService,
-    deletePrescriptionService 
+    deletePrescriptionService,
 } from '../services/prescription.service.js';
 import getPaginationData from '../utils/queryString.js';
 
@@ -84,17 +83,6 @@ export const createPrescription = async (req, res, next) => {
     }
 };
 
-const validatePatient = async (patientId) => {
-    if (!patientId) {
-        throw new CustomError.BadRequestError(`Patient is required`);
-    }
-    const patient = await getPatientService(patientId);
-        if (!patient) {
-            throw new CustomError.NotFoundError(`Patient not found with id ${patientId}`);
-    }
-    return patient;
-};
-
 export const updatePrescription = async (req, res, next) => {
     try {
         const prescriptionId = req.params.id;
@@ -115,11 +103,8 @@ export const deletePrescription = async (req, res, next) => {
         if (!prescription) {
             throw new CustomError.NotFoundError(`Prescription not found with id ${prescriptionId}`);
         }
-        const updatedPatient = await updatePatientService(prescription.patientId, 
+        await updatePatientService(prescription.patientId, 
             { $pull: { prescriptions: { prescriptionRecord: prescriptionId } } });
-        if (!updatedPatient) {
-            throw new CustomError.InternalServerError(`Error deleting prescription`);
-        }
         res.status(StatusCodes.OK).json({ message: 'Prescription deleted successfully', data: prescription });
     } catch (error) {
         next(error);

@@ -26,7 +26,7 @@ export const createPatientService = async (data) => {
 };
 
 export const getPatientService = async (patientId) => {
-    return await Patient.findOne({ patientId }).lean();
+    return await Patient.findOne({ patientId  }).lean();
 };
 
 export const getPatientByIDService = async (id) => {
@@ -39,5 +39,5 @@ export const updatePatientService = async (id, data) => {
 };
 
 export const deletePatientService = async (id) => {
-    return await Patient.findOneAndDelete({ patientId: id }).lean();
+    return await Patient.findOneAndUpdate({ patientId: id }, { status: false }, { new: true }).lean();
 };

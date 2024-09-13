@@ -1,8 +1,8 @@
 import * as yup from 'yup';
 
 const patientSchema = yup.object({
-    patientId: yup.string().max(8).min(8),
-    userId: yup.string().max(8).min(8),
+    patientId: yup.string().min(8),
+    userId: yup.string().min(8),
     fName: yup.string().max(50).min(2),
     lName: yup.string().max(50).min(2),
     dob: yup.date(),

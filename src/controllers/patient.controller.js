@@ -95,3 +95,19 @@ export const deletePatient = async (req, res, next) => {
         next(err);
     }
 };
+
+export const validatePatient = async (patientId) => {
+    try {
+        if (!patientId) {
+            throw new CustomError.BadRequestError(`Patient is required`);
+        }
+        const patient = await getPatientService(patientId);
+            if (!patient) {
+                throw new CustomError.NotFoundError(`Patient not found with id ${patientId}`);
+        }
+        return patient;
+    } catch (error) {
+        throw error;
+    }
+    
+};
